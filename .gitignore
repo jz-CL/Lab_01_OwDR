@@ -1,0 +1,12 @@
+envLAB/
+migrations/
+.config/
+__pycache__/
+
+.idea/
+.vscode
+node_modules
+package-lock.json
+project
+
+charity-donation.sqlite3
