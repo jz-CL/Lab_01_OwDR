@@ -32,6 +32,7 @@
         </ul>
       </nav>
 
+<!-- //--------------------------- page content -------------------------// -->
       <div class="slogan container container--90">
         <div class="slogan--item">
           <h1>
@@ -58,6 +59,9 @@
           </div>
         </div>
       </div>
+
+<!--    {% block content %}{% endblock content %}-->
+<!-- //--------------------------- page content end ---------------------// -->
     </header>
 
     <section class="form--steps">
@@ -345,6 +349,6 @@
     </footer>
 
 
-  {% include 'app1/section_script_js.html' %}
+  <script type="text/javascript" src='{% static "app1/js/app.js" %}'></script>
   </body>
 </html>

@@ -28,4 +28,5 @@ from app1.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', LandingPageView.as_view(), name='landing-page'),
+    path('register/', RegisterView.as_view(), name='register'),
 ]

@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+
 from users.models import CustomUser
 
 # Create your models here.
@@ -38,7 +39,7 @@ class Donation(models.Model):
     pick_up_date = models.DateField()
     # https://docs.djangoproject.com/en/3.1/ref/models/fields/#timefield
     pick_up_time = models.TimeField()
-    pick_up_comment = models.TextField()
+    pick_up_comment = models.TextField(blank=True, null=True)
     # user = models.ForeignKey(User, related_name='donation', on_delete=models.CASCADE)
-    # user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='donation')
+    # user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
