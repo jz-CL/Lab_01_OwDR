@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
-    {% include 'app1/section_css.html' %}
+    <link rel="stylesheet" href="{% static "app1/css/style.css" %}">
 <!--    <link rel="stylesheet" href="css/style.css" />-->
   </head>
   <body>
@@ -66,7 +66,15 @@
             <button class="btn" type="submit">Wyślij</button> 
           </form>
         </div>
-        {% include 'app1/section_buttom-line.html' %}
+        <div class="bottom-line">
+        <span class="bottom-line--copy">Copyright &copy; 2019</span>
+        <div class="bottom-line--icons">
+            <a href="#" class="btn btn--small">
+                <img src="{% static "app1/images/icon-facebook.svg" %}"/>
+            </a>
+            <a href="#" class="btn btn--small"><img src="{% static "app1/images/icon-instagram.svg" %}"/>
+            </a>
+        </div>
 <!--        <div class="bottom-line">-->
 <!--          <span class="bottom-line&#45;&#45;copy">Copyright &copy; 2018</span>-->
 <!--          <div class="bottom-line&#45;&#45;icons">-->
