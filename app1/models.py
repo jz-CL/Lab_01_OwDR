@@ -28,9 +28,11 @@ class Donation(models.Model):
     # liczba worków
     quantity = models.IntegerField()
     categories = models.ManyToManyField(Category, related_name='donation')
+    # instytucje
     institution = models.ForeignKey(Institution, related_name='donation', on_delete=models.CASCADE)
-
+    # (ulica plus numer dom
     address = models.CharField(max_length=64)
+    # numer telefonu
     phone_number = models.CharField(max_length=16)
     city = models.TextField()
     zip_code = models.TextField()
@@ -40,6 +42,6 @@ class Donation(models.Model):
     # https://docs.djangoproject.com/en/3.1/ref/models/fields/#timefield
     pick_up_time = models.TimeField()
     pick_up_comment = models.TextField(blank=True, null=True)
-    user = models.ForeignKey(User, related_name='donation', on_delete=models.CASCADE, null=True)
+    # user = models.ForeignKey(User, related_name='donation', on_delete=models.CASCADE, null=True)
     # user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
