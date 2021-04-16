@@ -16,12 +16,15 @@ TYPE_CHOICES = (
 class Category(models.Model):
     name = models.CharField(max_length=255)
 
+    def __str__(self):
+        return self.name
 
 class Institution(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     type = models.IntegerField(choices=TYPE_CHOICES, default=DEFAULT_TYPE)
     categories = models.ManyToManyField(Category, related_name='institution')
+
 
 
 class Donation(models.Model):
