@@ -100,4 +100,4 @@ class RegisterView(View):
 
     def get(self, request, *args, **kwargs):
         ctx = {}
-        return render(request, template_name, ctx)
+        return render(request, self.template_name, ctx)
