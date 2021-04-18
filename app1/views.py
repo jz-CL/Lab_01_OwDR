@@ -1,10 +1,14 @@
-from django.shortcuts import render
-from django.views import View
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib import messages
+from django.contrib.auth.hashers import make_password
+from django.shortcuts import render, redirect
+from django.views import View
 
 from .models import Donation, Institution, Category
+from .forms import RegisterUserForm
 # Create your views here.
 
+User = get_user_model()
 
 class LandingPageView(View):
     template_name = 'app1/index.html'
@@ -96,8 +100,33 @@ class LoginView(View):
 
 
 class RegisterView(View):
+    form_class = RegisterUserForm
     template_name = 'app1/register.html'
 
     def get(self, request, *args, **kwargs):
-        ctx = {}
+
+        ctx = {
+            'form': self.form_class(),
+
+        }
         return render(request, self.template_name, ctx)
+
+    def post(self, request, *args, **kwargs):
+
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            cd = form.cleaned_data
+            # zapisz dane użytkownika
+            User.objects.create_user(
+                email=cd['email'],
+                password = cd['password'] # make_password
+            )
+
+
+            return redirect('login')
+        ctx = {
+
+            }
+        return render(request, self.template_name, ctx)
+
