@@ -86,10 +86,25 @@ class LandingPageView(View):
 class AddDonationView(View):
     template_name = 'app1/form.html'
 
+
+    # breakpoint()
     def get(self, request, *args, **kwargs):
-        ctx = {}
+
+        categories = Category.objects.all()
+
+        ctx = {
+            'categories': categories,
+        }
         return render(request, self.template_name, ctx)
 
+    def post(self, request, *args, **kwargs):
+
+        form = self.form_class(request.POST)
+        message = None
+
+        if form.is_valid():
+            pass
+        return render(request, self.template_name, ctx)
 
 class LoginView(View):
     form_class = LoginUserForm
