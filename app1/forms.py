@@ -38,3 +38,6 @@ class RegisterUserForm(forms.Form):
             raise ValidationError('Ten login jest zajęty')
 
 
+class LoginUserForm(forms.Form):
+    email = forms.EmailField(label='email', required=True)
+    password = forms.CharField(label='password', required=True)

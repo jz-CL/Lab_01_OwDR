@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 
 from .models import Donation, Institution, Category
-from .forms import RegisterUserForm
+from .forms import RegisterUserForm, LoginUserForm
 # Create your views here.
 
 User = get_user_model()
@@ -96,9 +96,47 @@ class LoginView(View):
     template_name = 'app1/login.html'
 
     def get(self, request, *args, **kwargs):
-        ctx = {}
+        ctx = {
+            'form': self.form_class(),
+        }
         return render(request, self.template_name, ctx)
 
+    def post(self, request, *args, **kwargs):
+
+        form = self.form_class(request.POST)
+        message = None
+
+        if form.is_valid():
+            # jeśli jest True, to zaloguj użytkownika
+            # breakpoint()
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+
+            # dla django 2.2
+            # user = authenticate(username, password)
+            # dla django 3.x
+            user = authenticate(email=email, password=password)
+            if user:
+                # login user
+                login(request, user)
+                return redirect('landing-page')
+            else:
+                # not login
+
+                message = 'Podaj poprawne dane'
+                return redirect('register')
+
+
+        else:
+            # jeśli False, to wyświetl komunikat
+            message = "Uzupełnij poprawnie dane"
+
+
+        context = {
+            'form': form,
+            'message': message,
+        }
+        return render(request, self.template_name, context)
 
 class RegisterView(View):
     form_class = RegisterUserForm
