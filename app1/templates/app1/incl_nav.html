@@ -2,24 +2,30 @@
         <ul class="nav--actions">
 
 <!--    sprawdzaj user jest zautentykowany    -->
+        {% if request.user.is_authenticated %}
 <!--    jeśli tak    -->
 <!--    to user zalogowany     -->
 
 
-<!--
+
           <li class="logged-user">
-            Witaj Agata
+            Witaj {{ request.user.first_name }}
             <ul class="dropdown">
-              <li><a href="#">Profil</a></li>
-              <li><a href="#">Ustawienia</a></li>
-              <li><a href="#">Wyloguj</a></li>
+              <li><a href="#1">Profil</a></li>
+              <li><a href="#2">Ustawienia</a></li>
+                {% if request.user.is_staff %}
+                    <li><a href="{% url 'admin:index' %}">Panel administracyjny</a></li>
+                {% endif %}
+              <li><a href="{% url 'logout' %}">Wyloguj</a></li>
             </ul>
           </li>
--->
+
 
 <!--    jeśli nie-->
+        {% else %}
           <li><a href="{% url 'login' %}" class="btn btn--small btn--without-border">Zaloguj</a></li>
           <li><a href="{% url 'register' %}" class="btn btn--small btn--highlighted">Załóż konto</a></li>
+        {% endif %}
         </ul>
 <!--    end jeśli-->
 

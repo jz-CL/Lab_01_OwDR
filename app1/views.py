@@ -138,6 +138,17 @@ class LoginView(View):
         }
         return render(request, self.template_name, context)
 
+class LogoutView(View):
+    # form_class = LoginUserForm
+    template_name = 'app1/login.html'
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            logout(request)
+            # ctx = {}
+            return redirect('landing-page')
+        # return render(request, self.template_name, ctx)
+
 class RegisterView(View):
     form_class = RegisterUserForm
     template_name = 'app1/register.html'

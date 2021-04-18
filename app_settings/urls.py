@@ -16,10 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from django.contrib.auth import views as auth_views
+
 from app1.views import (
     LandingPageView,
     AddDonationView,
-    LoginView,
+    LoginView, LogoutView,
     RegisterView,
 )
 
@@ -31,4 +33,7 @@ urlpatterns = [
     path('add_donation/', AddDonationView.as_view(), name='add-donation'),
     path('login/', LoginView.as_view(), name='login'),
     path('register/', RegisterView.as_view(), name='register'),
+    # path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+
 ]
