@@ -10,8 +10,8 @@ class RegisterUserForm(forms.Form):
 
     # breakpoint()
 
-    # name = forms.CharField(label='name')
-    # surname = forms.CharField(label='surname')
+    name = forms.CharField(label='name')
+    surname = forms.CharField(label='surname')
     email = forms.EmailField(label='email')
     password = forms.CharField(label='password')
     password2 = forms.CharField(label='password2')
@@ -36,3 +36,5 @@ class RegisterUserForm(forms.Form):
         if User.objects.filter(email=email).exists():
         #     # exists() zwraca True lub False jeśli istnieje
             raise ValidationError('Ten login jest zajęty')
+
+

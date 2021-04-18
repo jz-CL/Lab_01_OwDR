@@ -92,6 +92,7 @@ class AddDonationView(View):
 
 
 class LoginView(View):
+    form_class = LoginUserForm
     template_name = 'app1/login.html'
 
     def get(self, request, *args, **kwargs):
@@ -120,7 +121,9 @@ class RegisterView(View):
             # zapisz dane użytkownika
             User.objects.create_user(
                 email=cd['email'],
-                password = cd['password'] # make_password
+                password=cd['password'],  # make_password
+                first_name=cd['name'],
+                last_name=cd['surname']
             )
 
 
