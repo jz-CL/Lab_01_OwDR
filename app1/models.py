@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 
+from django.contrib import admin
+
 from accounts.models import User
 
 # Create your models here.
@@ -25,7 +27,14 @@ class Institution(models.Model):
     type = models.IntegerField(choices=TYPE_CHOICES, default=DEFAULT_TYPE)
     categories = models.ManyToManyField(Category, related_name='institution')
 
+    def __str__(self):
+        return self.name
+    
+#     https://docs.djangoproject.com/pl/3.2/intro/tutorial07/#customize-the-admin-form
+class InstitutionAdmin(admin.ModelAdmin):
+    fields = []
 
+admin.site.register(Institution, InstitutionAdmin)
 
 class Donation(models.Model):
     # liczba worków

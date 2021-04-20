@@ -23,6 +23,7 @@ from app1.views import (
     AddDonationView,
     LoginView, LogoutView,
     RegisterView,
+UserView,
 )
 
 
@@ -35,5 +36,6 @@ urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     # path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    path('user/', UserView.as_view(), name='user'),
 
 ]

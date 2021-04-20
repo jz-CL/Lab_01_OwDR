@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect
 from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Donation, Institution, Category
 from .forms import RegisterUserForm, LoginUserForm
@@ -91,9 +92,11 @@ class AddDonationView(View):
     def get(self, request, *args, **kwargs):
 
         categories = Category.objects.all()
+        institutions = Institution.objects.all()
 
         ctx = {
             'categories': categories,
+            'institutions': institutions,
         }
         return render(request, self.template_name, ctx)
 
@@ -197,3 +200,9 @@ class RegisterView(View):
             }
         return render(request, self.template_name, ctx)
 
+class UserView(LoginRequiredMixin, View):
+    template_name = 'app1/user.html'
+    def get(self, request, *args, **kwargs):
+
+        ctx = {}
+        return render(request, self.template_name, ctx)
