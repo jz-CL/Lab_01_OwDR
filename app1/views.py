@@ -120,8 +120,24 @@ class AddDonationView(View):
         # zapisz do bazy
         institution = request.POST.get('organization')
         categories = Category.objects.filter(pk=request.POST.get('categories'))
+        # categories = Category.objects.get(category_id=self.kwargs['pk'])
+        # breakpoint()
+        post_data = {
+            'quantity': request.POST.get('bags'),
+            'institution': Institution.objects.get(pk=institution),
+            'address': request.POST.get('address'),
+            'city': request.POST.get('city'),
+            'zip_code': request.POST.get('postcode'),
+            'phone_number': request.POST.get('phone'),
+            'pick_up_date': request.POST.get('data'),
+            'pick_up_time': request.POST.get('time'),
+            'pick_up_comment': request.POST.get('more_info'),
+            'user': request.user
+        }
+        donation = Donation.objects.create(**post_data)
+        for category in categories:
+            donation.categories.add(category)
 
-        breakpoint()
 
         return redirect('confirmation')
 
