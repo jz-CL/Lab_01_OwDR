@@ -21,6 +21,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+class CategoryAdmin(admin.ModelAdmin):
+    fields = []
+
+admin.site.register(Category, CategoryAdmin)
 class Institution(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()

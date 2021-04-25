@@ -235,6 +235,39 @@ document.addEventListener("DOMContentLoaded", function() {
       this.$step.parentElement.hidden = this.currentStep >= 6;
 
       // TODO: get data from inputs and show them in summary
+      //
+      // let number_bags = document.getElementsByName('bags')
+      let radio_button = document.querySelectorAll('.form-group--checkbox input[type="radio"]:checked')[0].value
+      let radio_button_name = document.querySelectorAll('.form-group--checkbox input[type="radio"]:checked')[0].parentElement.querySelector('.title').innerText
+
+      // ------------------------------------
+      let inputs_fsc = document.querySelectorAll('.form-section--column')
+
+      let input_adres = inputs_fsc[0].children[1].children[0].control.value
+      let input_miasto = inputs_fsc[0].children[2].children[0].control.value
+      let input_kodpocztowy = inputs_fsc[0].children[3].children[0].control.value
+      let input_nrtelefonu = inputs_fsc[0].children[4].children[0].control.value
+
+      let input_date = inputs_fsc[1].children[1].children[0].children[0].value
+      let input_godzina = inputs_fsc[1].children[2].children[0].children[0].value
+      let input_uwaga = inputs_fsc[1].children[3].children[0].children[0].value
+
+      // let number_bags = document.querySelector('.form-group.form-group--inline').lastElementChild.lastElementChild.value
+      let number_bags = document.querySelector('.form-group.form-group--inline').children[0].children[0].value
+      const w_li = document.querySelector('.summary').querySelector('.form-section').querySelectorAll('li')
+      w_li[0].querySelector('.summary--text').innerText = number_bags + " worki ubrań w dobrym stanie dla dzieci"
+      w_li[1].querySelector('.summary--text').innerText = "Dla " + radio_button_name
+      let innerText_summary_child = document.querySelector('.summary').children[1]
+      innerText_summary_child.children[0].children[1].children[0].innerText = input_adres
+      innerText_summary_child.children[0].children[1].children[1].innerText = input_miasto
+
+      innerText_summary_child.children[0].children[1].children[2].innerText = input_kodpocztowy
+      innerText_summary_child.children[0].children[1].children[3].innerText = input_nrtelefonu
+
+      innerText_summary_child.children[1].children[1].children[0].innerText = input_date
+      innerText_summary_child.children[1].children[1].children[1].innerText = input_godzina
+      innerText_summary_child.children[1].children[1].children[2].innerText = input_uwaga
+
     }
 
     /**
@@ -244,6 +277,21 @@ document.addEventListener("DOMContentLoaded", function() {
      */
     submit(e) {
       e.preventDefault();
+
+      const formData = new FormData(this.$form.getElementsByTagName('form').item(0));
+
+      fetch('/add_donation/', {
+        method: 'post',
+        body: formData
+      }).then(function (response) {
+        return response.text();
+      }).then(function (data) {
+        console.log(data);
+      }).catch(function (error) {
+        console.error(error);
+      })
+
+
       this.currentStep++;
       this.updateForm();
     }

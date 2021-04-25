@@ -101,10 +101,22 @@ class AddDonationView(View):
         return render(request, self.template_name, ctx)
 
     def post(self, request, *args, **kwargs):
-
-        form = self.form_class(request.POST)
-        message = None
-
+        breakpoint()
+        # form = self.form_class(request.POST)
+        # message = None
+        #  (Pdb) request.POST
+        # <QueryDict: {
+        # 'csrfmiddlewaretoken': ['KnvK2eAcxUdXJ1cRPJ2oPA4bBj4y1zSI4R6dKTKR9oPtYjcpbAnv2abx2qLnpCXD'],
+        # 'categories': ['5', '6', '7'],
+        # 'bags': ['250'],
+        # 'organization': ['6'],
+        # 'address': ['Długa 100'],
+        # 'city': ['Paryż'],
+        # 'postcode': ['01-005'],
+        # 'phone': ['997'],
+        # 'data': ['2022-05-26'],
+        # 'time': ['01:42'],
+        # 'more_info': ['brak uwag']}>
         if form.is_valid():
             pass
         return render(request, self.template_name, ctx)
