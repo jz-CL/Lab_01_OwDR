@@ -101,7 +101,6 @@ class AddDonationView(View):
         return render(request, self.template_name, ctx)
 
     def post(self, request, *args, **kwargs):
-        breakpoint()
         # form = self.form_class(request.POST)
         # message = None
         #  (Pdb) request.POST
@@ -117,9 +116,14 @@ class AddDonationView(View):
         # 'data': ['2022-05-26'],
         # 'time': ['01:42'],
         # 'more_info': ['brak uwag']}>
-        if form.is_valid():
-            pass
-        return render(request, self.template_name, ctx)
+
+        # zapisz do bazy
+        institution = request.POST.get('organization')
+        categories = Category.objects.filter(pk=request.POST.get('categories'))
+
+        breakpoint()
+
+        return redirect('confirmation')
 
 class LoginView(View):
     form_class = LoginUserForm
@@ -214,6 +218,15 @@ class RegisterView(View):
 
 class UserView(LoginRequiredMixin, View):
     template_name = 'app1/user.html'
+
+    def get(self, request, *args, **kwargs):
+
+        ctx = {}
+        return render(request, self.template_name, ctx)
+
+class ConfirmationView(LoginRequiredMixin, View):
+    template_name = 'app1/form-confirmation.html'
+
     def get(self, request, *args, **kwargs):
 
         ctx = {}
