@@ -1,9 +1,13 @@
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib import messages
+from django.http import JsonResponse
+from django.urls import reverse
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+import datetime
+
 
 from .models import Donation, Institution, Category
 from .forms import RegisterUserForm, LoginUserForm
@@ -84,7 +88,7 @@ class LandingPageView(View):
         return render(request, self.template_name, ctx)
 
 
-class AddDonationView(View):
+class AddDonationView(LoginRequiredMixin, View):
     template_name = 'app1/form.html'
 
 
@@ -101,27 +105,9 @@ class AddDonationView(View):
         return render(request, self.template_name, ctx)
 
     def post(self, request, *args, **kwargs):
-        # form = self.form_class(request.POST)
-        # message = None
-        #  (Pdb) request.POST
-        # <QueryDict: {
-        # 'csrfmiddlewaretoken': ['KnvK2eAcxUdXJ1cRPJ2oPA4bBj4y1zSI4R6dKTKR9oPtYjcpbAnv2abx2qLnpCXD'],
-        # 'categories': ['5', '6', '7'],
-        # 'bags': ['250'],
-        # 'organization': ['6'],
-        # 'address': ['Długa 100'],
-        # 'city': ['Paryż'],
-        # 'postcode': ['01-005'],
-        # 'phone': ['997'],
-        # 'data': ['2022-05-26'],
-        # 'time': ['01:42'],
-        # 'more_info': ['brak uwag']}>
-
-        # zapisz do bazy
         institution = request.POST.get('organization')
-        categories = Category.objects.filter(pk=request.POST.get('categories'))
-        # categories = Category.objects.get(category_id=self.kwargs['pk'])
-        # breakpoint()
+        # wyjac z requesta talice idkow categorii
+        # pobrac z bazy kategorie o tych idkach
         post_data = {
             'quantity': request.POST.get('bags'),
             'institution': Institution.objects.get(pk=institution),
@@ -129,17 +115,26 @@ class AddDonationView(View):
             'city': request.POST.get('city'),
             'zip_code': request.POST.get('postcode'),
             'phone_number': request.POST.get('phone'),
-            'pick_up_date': request.POST.get('data'),
-            'pick_up_time': request.POST.get('time'),
+            # 'pick_up_date': request.POST.get('data'),
+            # 'pick_up_time': request.POST.get('time'),
+            'pick_up_date': '2020-03-11',
+            'pick_up_time': '12:00:00',
             'pick_up_comment': request.POST.get('more_info'),
-            'user': request.user
+            'user': request.user,
         }
+
         donation = Donation.objects.create(**post_data)
-        for category in categories:
+        categoriesIds = request.POST.getlist('categories')
+
+        # breakpoint()
+        for id in categoriesIds:
+            category = Category.objects.get(pk=id)
             donation.categories.add(category)
-
-
-        return redirect('confirmation')
+        # return redirect('confirmation')
+        # breakpoint()
+        return JsonResponse({'url': reverse('confirmation')})
+        # ctx = {}
+        # return render(request, 'app1/form-confirmation.html', ctx)
 
 class LoginView(View):
     form_class = LoginUserForm
@@ -247,3 +242,4 @@ class ConfirmationView(LoginRequiredMixin, View):
 
         ctx = {}
         return render(request, self.template_name, ctx)
+

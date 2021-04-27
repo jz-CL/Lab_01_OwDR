@@ -1,13 +1,16 @@
-<!--{% extends 'app1/base.html' %}-->
+{% extends "app1/base.html" %}
+
+<!--{% load static %}-->
 
 <!-- //--------------------------- page header -------------------------// -->
 {% block header %}
      <header class="header--form-page">
 
-    {% include 'incl_nav.html' %}
+    {% include 'app1/incl_nav.html' %}
       <div class="slogan container container--90">
           <h2>
-            Dziękujemy za przesłanie formularza. Na maila prześlemy wszelkie
+            Dziękujemy za przesłanie formularza.<br>
+              Na maila prześlemy<br>wszelkie
             informacje o odbiorze.
           </h2>
       </div>

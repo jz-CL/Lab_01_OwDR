@@ -284,13 +284,13 @@ document.addEventListener("DOMContentLoaded", function() {
       e.preventDefault();
 
       const formData = new FormData(this.$form.getElementsByTagName('form').item(0));
-      console.log(this.$form.getElementsByTagName('form'));
-      console.log('++++');
 
-      fetch('/add_donation/', {
+      fetch('/confirmation/', {
+      // fetch('/add_donation/', {
         method: 'post',
         body: formData
-      }).then(function (response) {
+      }).then(function (response) { // od backendu
+        window.location.href=response.url
         return response.text();
       }).then(function (data) {
         console.log(data);
