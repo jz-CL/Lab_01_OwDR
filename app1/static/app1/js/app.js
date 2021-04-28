@@ -290,7 +290,7 @@ document.addEventListener("DOMContentLoaded", function() {
         method: 'post',
         body: formData
       }).then(function (response) { // od backendu
-        // window.location.href=response.url
+        window.location.href=response.url
         return response.text();
       }).then(function (data) {
         console.log(data);
